@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀)
+ -->
+<mapper namespace="com.wjh.dao.ClassesDao">
+    <resultMap id="ClassesMap" type="com.wjh.entity.onetoone.Classes">
+        <result property="cid" column="cid"/>
+        <result property="cname" column="cname"/>
+        <association property="teacher" javaType="com.wjh.entity.onetoone.Teacher">
+            <result property="tid" column="tid"/>
+            <result property="tname" column="tname"/>
+        </association>
+    </resultMap>
+    <!-- 根据班级id查询班级信息（附带老师信息），设定为一个老师只带一个班级 -->
+    <select id="getClasses" parameterType="String" resultMap="ClassesMap">
+        SELECT * FROM classes c,teacher t WHERE c.cid=t.tid and c.cid=#{cid}
+    </select>
+
+    <!-- 方法二 -->
+    <select id="getTeacher" parameterType="String" resultType="com.wjh.entity.onetoone.Teacher">
+        SELECT * FROM teacher WHERE tid=#{tid}
+    </select>
+    <resultMap id="ClassesMap2" type="com.wjh.entity.onetoone.Classes">
+        <result property="cid" column="cid"/>
+        <result property="cname" column="cname"/>
+        <association property="teacher" column="cid" select="getTeacher"/>
+    </resultMap>
+    <select id="getClasses2" parameterType="String" resultMap="ClassesMap2">
+        SELECT * FROM classes WHERE cid=#{cid}
+    </select>
+    
+</mapper>

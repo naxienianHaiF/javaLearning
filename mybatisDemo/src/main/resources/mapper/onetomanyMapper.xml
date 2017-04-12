@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀)
+ -->
+<mapper namespace="com.wjh.dao.OnetoManyDao">
+
+    <resultMap id="GradeResultMap" type="com.wjh.entity.onetomany.Grade">
+        <result property="gclass" column="gd"/>
+        <result property="gteacher" column="gname"/>
+        <collection property="students" ofType="com.wjh.entity.onetomany.Student">
+            <result property="sname" column="sname" />
+            <result property="sclass" column="sclass"/>
+        </collection>
+    </resultMap>
+
+    <select id="getGrade" resultMap="GradeResultMap" parameterType="String">
+        SELECT * FROM grade g,student s where g.gd=s.sclass and g.gd=#{id}
+    </select>
+
+    <!--方法二  嵌套查询：通过执行另外一个SQL映射语句来返回预期的复杂类型-->
+    <select id="getStudent" parameterType="String" resultType="Student">
+        SELECT * FROM student WHERE sclass=#{id}
+    </select>
+    <resultMap id="GradeResultMap1" type="com.wjh.entity.onetomany.Grade">
+        <result property="gclass" column="gd"/>
+        <result property="gteacher" column="gname"/>
+        <!-- 这个地方的column是指一对多中的一参数 -->
+        <collection property="students" ofType="Student" column="gd" select="getStudent"/>
+    </resultMap>
+    <select id="getGrade2" resultMap="GradeResultMap1" parameterType="String">
+        SELECT * FROM grade WHERE gd=#{gd}
+    </select>
+</mapper>

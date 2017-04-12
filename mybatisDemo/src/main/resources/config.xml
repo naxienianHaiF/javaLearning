@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <typeAliases>
+        <typeAlias type="com.wjh.entity.User" alias="User" />
+        <typeAlias type="com.wjh.entity.onetomany.Student" alias="Student"/>
+    </typeAliases>
+
+    <environments default="development">   <!-- development是开发 production test-->
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <!-- 配置数据库连接信息 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatisdemo"/>
+                <property name="username" value="root"/>
+                <property name="password" value="Wjh1992"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!-- 注册userMapper.xml文件，
+        userMapper.xml位于com.wjh.dao这个包下，所以resource写成com/wjh/dao/userMapper.xml-->
+        <mapper resource="mapper/userMapper.xml"/>
+        <mapper resource="mapper/classesMapper.xml" />
+        <mapper resource="mapper/onetomanyMapper.xml" />
+    </mappers>
+
+</configuration>
