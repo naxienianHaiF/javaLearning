@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.wjh.entity.User">
+        <id name="id">  <!-- 映射的数据库primary key -->
+            <generator class="identity"/>
+        </id>
+        <!--如果你的数据库中的字段名不相同则使用以下形式，例如：class 中 name，
+         数据库为 _name 那么书写形式如下： <property name="name"
+         column="_name" /> -->
+        <property name="name"/>
+        <!-- 下面都是映射我们的其他属性，如果你的数据库中的字段名相同则使用以下形式 -->
+<!--        <property name="name" type="java.lang.String">
+            <column name="name"></column>
+        </property>-->
+        <property name="password"/>
+    </class>
+</hibernate-mapping>

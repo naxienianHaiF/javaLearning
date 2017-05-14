@@ -59,14 +59,22 @@ public class TestMybatis {
             reader = Resources.getResourceAsReader("config.xml");
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
             SqlSession session = sqlSessionFactory.openSession();
+            long start=System.currentTimeMillis();
             UserDao userDao = session.getMapper(UserDao.class);
             User user=new User(2,"xtu",60);
             System.out.println("插入："+userDao.addUser(user));
+            long end=System.currentTimeMillis();
+            System.out.println("花费了："+(end-start));
             List<User> list = userDao.getAll();
             for (User user1 : list) {
                 System.out.println(user1);
             }
             System.out.println("删除："+userDao.deleteUser(2));
+            session.commit();
+            List<User> list1 = userDao.getAll();
+            for (User user1 : list1) {
+                System.out.println(user1);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
