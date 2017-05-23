@@ -3,8 +3,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -17,29 +15,48 @@ public class UserTest {
 
     private SessionFactory factory;
     private Session session;
-    @Before
-    public void init(){
-        Configuration cfg=new Configuration().configure();
-        factory=cfg.buildSessionFactory();
-        session=factory.openSession();
-        session.beginTransaction();
-    }
-    @After
-    public void destory(){
-        session.getTransaction().commit();
-        if (session!=null){
-            session.close();
-        }
-        if (factory != null) {
-            factory.close();
-        }
-    }
+//    @Before
+//    public void init(){
+//        Configuration cfg=new Configuration().configure();
+//        factory=cfg.buildSessionFactory();
+//        session=factory.openSession();
+//        session.beginTransaction();
+//    }
+//    @After
+//    public void destory(){
+////        session.getTransaction().commit();
+//        if (session!=null){
+//            session.close();
+//        }
+//        if (factory != null) {
+//            factory.close();
+//        }
+//    }
     @Test
     public void testAdd(){
+        Configuration cfg=new Configuration().configure();
+        factory=cfg.buildSessionFactory();
+//        session.beginTransaction();
         User user=new User();
-        user.setName("wjh");
-        user.setPassword("wjh");
-        session.save(user);
+        for (int j=0;j<10;j++){
+            System.out.println("j="+j);
+            long start=System.currentTimeMillis();
+            for(int i=0;i<1000;i++){
+                session=factory.openSession();
+                session.beginTransaction();
+                user.setName(Integer.toString(i));
+                user.setPassword(Integer.toString(i));
+                //TODO 代码还有问题，未能正确提交到数据库中
+                session.save(user);
+                session.flush();
+                session.clear();
+                session.getTransaction().commit();
+                session.close();
+            }
+            long end=System.currentTimeMillis();
+            System.out.println(end-start);
+        }
+
     }
     @Test
     public void testDelete1(){

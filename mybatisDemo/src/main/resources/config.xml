@@ -5,6 +5,7 @@
     <typeAliases>
         <typeAlias type="com.wjh.entity.User" alias="User" />
         <typeAlias type="com.wjh.entity.onetomany.Student" alias="Student"/>
+        <typeAlias type="com.wjh.entity.WJH" alias="WJH" />
     </typeAliases>
 
     <environments default="development">   <!-- development是开发 production test-->
@@ -26,6 +27,7 @@
         <mapper resource="mapper/userMapper.xml"/>
         <mapper resource="mapper/classesMapper.xml" />
         <mapper resource="mapper/onetomanyMapper.xml" />
+        <mapper resource="mapper/wjhMapper.xml" />
     </mappers>
 
 </configuration>
