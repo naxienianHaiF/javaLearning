@@ -2,10 +2,9 @@ package com.wjh.controller;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * Created by WJH on 2017年07月30日 20:07
@@ -99,5 +98,20 @@ public class DataBinding {
     @RequestMapping("/set.do")
     public String set(UserSet set){
         return set.toString();
+    }
+
+    @RequestMapping("/json.do")
+    public String json(@RequestBody User user){
+        return user.toString();
+    }
+    /*
+    Map是可以直接映射的
+     */
+    @RequestMapping("/easymap.do")
+    public String map(@RequestParam(required = false)Map<String,String> param){
+        if (param==null){
+            return "parameters is null";
+        }else
+            return  param.toString();
     }
 }
