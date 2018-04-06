@@ -6,6 +6,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by WJH on 2018年04月05日 11:47
+ * {@link MyService}
  */
 public class MyCondition {
 
