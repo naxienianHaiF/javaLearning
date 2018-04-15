@@ -26,6 +26,8 @@ public class CyclicBarrierDemo {
         } catch (BrokenBarrierException e) {
             e.printStackTrace();
         }
+        System.out.println(Thread.currentThread().getName() + "" +
+                "会议已经开始了。。。");
     }
 
     public static void main(String[] args) {
