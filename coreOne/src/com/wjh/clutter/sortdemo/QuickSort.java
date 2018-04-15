@@ -22,13 +22,13 @@ public class QuickSort {
                 arr[l++] = arr[r];
             }
             while (l<r && arr[l] < temp){
-                l++;
-            }
-            if (l<r){
-                arr[r--] = arr[l];
-            }
+            l++;
         }
-        arr[l] = temp;
+        if (l<r){
+            arr[r--] = arr[l];
+        }
+    }
+    arr[l] = temp;
         quickSort(arr,left,l-1);
         quickSort(arr,l+1,right);
     }
